@@ -1,3 +1,4 @@
+#  听说你想写个渲染引擎 - 前言
 
 大家好，我是微微笑的蜗牛🐌。
 
@@ -19,18 +20,28 @@
 
 考虑到大部分移动端开发者对 rust 语言不太熟悉。因此，我打算用 swift 再重新实现一遍。同时，这也是我动手实践 swift 的过程，也算是一种技能练习吧。毕竟平常工作中用的不多，只是会关注一下。
 
+## 主体流程
+
 我们先简单了解下渲染引擎的工作流程，有个大体印象。如下图所示：
 
 ![](https://cdn.jsdelivr.net/gh/silan-liu/picRepo/img20210326100254.png)
 
 总的来说，分为这几个阶段：html 解析 → css 解析 → 节点样式处理 → 布局 → 绘制。每个阶段都有自己的产物。
 
+## 文章规划
+
 在接下来的几篇文章中，将会围绕上边的流程来讲述，并带大家实现一个小型的引擎，包括如下几部分：
 
-- [html 解析](https://mp.weixin.qq.com/s?__biz=Mzg4MjU2Mzc1MQ==&mid=2247485069&idx=2&sn=986f6eb0a7bece1d4e70253c3c9b7020&chksm=cf558945f8220053a6f15f658bcc2e442ee238c5639837076a85b2ceb6f7f6d104e4fbebc464&token=911515468&lang=zh_CN#rd)
+- [听说你想写个渲染引擎 - html 解析](https://mp.weixin.qq.com/s?__biz=Mzg4MjU2Mzc1MQ==&mid=2247485069&idx=2&sn=986f6eb0a7bece1d4e70253c3c9b7020&chksm=cf558945f8220053a6f15f658bcc2e442ee238c5639837076a85b2ceb6f7f6d104e4fbebc464&token=911515468&lang=zh_CN#rd)
 - css 解析
 - 生成样式树
 - 生成布局树
 - 绘制
 
-敬请期待吧~
+## 最后
+
+文章会同步发布到 [简书](https://www.jianshu.com/u/9d9cf9760217) 和公众号「微微笑的蜗牛」，欢迎关注。在公众号输入框回复「蜗牛」，可添加微信进行交流~
+
+
+![](https://cdn.jsdelivr.net/gh/silan-liu/picRepo/img20210131124048.jpg)
+
