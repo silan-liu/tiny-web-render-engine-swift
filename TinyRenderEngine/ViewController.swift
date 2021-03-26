@@ -32,20 +32,6 @@ class ViewController: UIViewController {
                 </html>
                 """
         
-        var sourceHelper = SourceHelper(input: input)
-        
-        print(sourceHelper.nextCharacter())
-        print(sourceHelper.consumeCharacter())
-        print(sourceHelper.nextCharacter())
-        print(sourceHelper.startsWith(s: "html"))
-        print(sourceHelper.consumeWhile { (char) -> Bool in
-            char.isLetter
-        })
-        
-        sourceHelper.consumeWhitespace()
-        print(sourceHelper.nextCharacter())
-        print(sourceHelper.eof())
-        
         var htmlParser = HTMLParser()
         let dom = htmlParser.parse(input: input)
         print(dom)

@@ -16,7 +16,19 @@
 		ADC650D6260D891F001E85AC /* Dom.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650D5260D891F001E85AC /* Dom.swift */; };
 		ADC650DB260D8CB3001E85AC /* SourceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650DA260D8CB3001E85AC /* SourceHelper.swift */; };
 		ADC650DD260D9536001E85AC /* HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650DC260D9536001E85AC /* HTMLParser.swift */; };
+		ADC650E6260D9EA4001E85AC /* TinyRenderEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650E5260D9EA4001E85AC /* TinyRenderEngineTests.swift */; };
+		ADC650EE260D9EC8001E85AC /* SourceHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650ED260D9EC8001E85AC /* SourceHelperTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		ADC650E8260D9EA4001E85AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADC650B6260D8443001E85AC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ADC650BD260D8444001E85AC;
+			remoteInfo = TinyRenderEngine;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		ADC650BE260D8444001E85AC /* TinyRenderEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinyRenderEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -30,10 +42,21 @@
 		ADC650D5260D891F001E85AC /* Dom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dom.swift; sourceTree = "<group>"; };
 		ADC650DA260D8CB3001E85AC /* SourceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceHelper.swift; sourceTree = "<group>"; };
 		ADC650DC260D9536001E85AC /* HTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLParser.swift; sourceTree = "<group>"; };
+		ADC650E3260D9EA4001E85AC /* TinyRenderEngineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TinyRenderEngineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADC650E5260D9EA4001E85AC /* TinyRenderEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinyRenderEngineTests.swift; sourceTree = "<group>"; };
+		ADC650E7260D9EA4001E85AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADC650ED260D9EC8001E85AC /* SourceHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceHelperTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		ADC650BB260D8444001E85AC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC650E0260D9EA4001E85AC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -47,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				ADC650C0260D8444001E85AC /* TinyRenderEngine */,
+				ADC650E4260D9EA4001E85AC /* TinyRenderEngineTests */,
 				ADC650BF260D8444001E85AC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -55,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				ADC650BE260D8444001E85AC /* TinyRenderEngine.app */,
+				ADC650E3260D9EA4001E85AC /* TinyRenderEngineTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -92,6 +117,16 @@
 			path = Example;
 			sourceTree = "<group>";
 		};
+		ADC650E4260D9EA4001E85AC /* TinyRenderEngineTests */ = {
+			isa = PBXGroup;
+			children = (
+				ADC650E5260D9EA4001E85AC /* TinyRenderEngineTests.swift */,
+				ADC650E7260D9EA4001E85AC /* Info.plist */,
+				ADC650ED260D9EC8001E85AC /* SourceHelperTests.swift */,
+			);
+			path = TinyRenderEngineTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -112,6 +147,24 @@
 			productReference = ADC650BE260D8444001E85AC /* TinyRenderEngine.app */;
 			productType = "com.apple.product-type.application";
 		};
+		ADC650E2260D9EA4001E85AC /* TinyRenderEngineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADC650EA260D9EA4001E85AC /* Build configuration list for PBXNativeTarget "TinyRenderEngineTests" */;
+			buildPhases = (
+				ADC650DF260D9EA4001E85AC /* Sources */,
+				ADC650E0260D9EA4001E85AC /* Frameworks */,
+				ADC650E1260D9EA4001E85AC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ADC650E9260D9EA4001E85AC /* PBXTargetDependency */,
+			);
+			name = TinyRenderEngineTests;
+			productName = TinyRenderEngineTests;
+			productReference = ADC650E3260D9EA4001E85AC /* TinyRenderEngineTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -123,6 +176,10 @@
 				TargetAttributes = {
 					ADC650BD260D8444001E85AC = {
 						CreatedOnToolsVersion = 12.0;
+					};
+					ADC650E2260D9EA4001E85AC = {
+						CreatedOnToolsVersion = 12.0;
+						TestTargetID = ADC650BD260D8444001E85AC;
 					};
 				};
 			};
@@ -140,6 +197,7 @@
 			projectRoot = "";
 			targets = (
 				ADC650BD260D8444001E85AC /* TinyRenderEngine */,
+				ADC650E2260D9EA4001E85AC /* TinyRenderEngineTests */,
 			);
 		};
 /* End PBXProject section */
@@ -152,6 +210,13 @@
 				ADC650CE260D8447001E85AC /* LaunchScreen.storyboard in Resources */,
 				ADC650CB260D8447001E85AC /* Assets.xcassets in Resources */,
 				ADC650C9260D8444001E85AC /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADC650E1260D9EA4001E85AC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,7 +236,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ADC650DF260D9EA4001E85AC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADC650EE260D9EC8001E85AC /* SourceHelperTests.swift in Sources */,
+				ADC650E6260D9EA4001E85AC /* TinyRenderEngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ADC650E9260D9EA4001E85AC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ADC650BD260D8444001E85AC /* TinyRenderEngine */;
+			targetProxy = ADC650E8260D9EA4001E85AC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		ADC650C7260D8444001E85AC /* Main.storyboard */ = {
@@ -347,6 +429,46 @@
 			};
 			name = Release;
 		};
+		ADC650EB260D9EA4001E85AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = F3JYQ7F95H;
+				INFOPLIST_FILE = TinyRenderEngineTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.summer.TinyRenderEngineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TinyRenderEngine.app/TinyRenderEngine";
+			};
+			name = Debug;
+		};
+		ADC650EC260D9EA4001E85AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = F3JYQ7F95H;
+				INFOPLIST_FILE = TinyRenderEngineTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.summer.TinyRenderEngineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TinyRenderEngine.app/TinyRenderEngine";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -364,6 +486,15 @@
 			buildConfigurations = (
 				ADC650D3260D8447001E85AC /* Debug */,
 				ADC650D4260D8447001E85AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADC650EA260D9EA4001E85AC /* Build configuration list for PBXNativeTarget "TinyRenderEngineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADC650EB260D9EA4001E85AC /* Debug */,
+				ADC650EC260D9EA4001E85AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
