@@ -21,8 +21,18 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor.white
         
-        let string = "<html    >    </html>"
-        var sourceHelper = SourceHelper(pos: string.startIndex, input: string)
+        let input = """
+                    <html>
+                    <body>
+                        <h1>Title</h1>
+                        <div id="main" class="test">
+                            <p>Hello <em>world</em>!</p>
+                        </div>
+                    </body>
+                </html>
+                """
+        
+        var sourceHelper = SourceHelper(input: input)
         
         print(sourceHelper.nextCharacter())
         print(sourceHelper.consumeCharacter())
@@ -35,6 +45,10 @@ class ViewController: UIViewController {
         sourceHelper.consumeWhitespace()
         print(sourceHelper.nextCharacter())
         print(sourceHelper.eof())
+        
+        var htmlParser = HTMLParser()
+        let dom = htmlParser.parse(input: input)
+        print(dom)
     }
     
     func test() {

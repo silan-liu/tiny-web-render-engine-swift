@@ -11,11 +11,27 @@ import Foundation
 public struct SourceHelper {
     // 位置游标
     var pos: String.Index
+    
     // 源字符串
-    let input: String
+    var input: String
 }
 
 extension SourceHelper {
+    init() {
+        input = ""
+        pos = input.startIndex
+    }
+    
+    init(input: String) {
+        pos = input.startIndex
+        self.input = input
+    }
+    
+    mutating func updateInput(input: String) {
+        pos = input.startIndex
+        self.input = input
+    }
+    
     // 返回下一个字符，游标不动
     func nextCharacter() -> Character {
         return input[pos]
