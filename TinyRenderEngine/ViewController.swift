@@ -21,6 +21,23 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor.white
         
+        let string = "<html    >    </html>"
+        var sourceHelper = SourceHelper(pos: string.startIndex, input: string)
+        
+        print(sourceHelper.nextCharacter())
+        print(sourceHelper.consumeCharacter())
+        print(sourceHelper.nextCharacter())
+        print(sourceHelper.startsWith(s: "html"))
+        print(sourceHelper.consumeWhile { (char) -> Bool in
+            char.isLetter
+        })
+        
+        sourceHelper.consumeWhitespace()
+        print(sourceHelper.nextCharacter())
+        print(sourceHelper.eof())
+    }
+    
+    func test() {
         var pixels = [PixelData]()
 
         let red = PixelData(a: 255, r: 255, g: 0, b: 0)

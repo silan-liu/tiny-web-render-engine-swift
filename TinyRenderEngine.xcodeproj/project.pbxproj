@@ -14,6 +14,8 @@
 		ADC650CB260D8447001E85AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADC650CA260D8447001E85AC /* Assets.xcassets */; };
 		ADC650CE260D8447001E85AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADC650CC260D8447001E85AC /* LaunchScreen.storyboard */; };
 		ADC650D6260D891F001E85AC /* Dom.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650D5260D891F001E85AC /* Dom.swift */; };
+		ADC650D9260D8C3F001E85AC /* HtmlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650D8260D8C3F001E85AC /* HtmlParser.swift */; };
+		ADC650DB260D8CB3001E85AC /* SourceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650DA260D8CB3001E85AC /* SourceHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		ADC650CD260D8447001E85AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ADC650CF260D8447001E85AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADC650D5260D891F001E85AC /* Dom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dom.swift; sourceTree = "<group>"; };
+		ADC650D8260D8C3F001E85AC /* HtmlParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HtmlParser.swift; sourceTree = "<group>"; };
+		ADC650DA260D8CB3001E85AC /* SourceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,8 @@
 			isa = PBXGroup;
 			children = (
 				ADC650D5260D891F001E85AC /* Dom.swift */,
+				ADC650D8260D8C3F001E85AC /* HtmlParser.swift */,
+				ADC650DA260D8CB3001E85AC /* SourceHelper.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -151,6 +157,8 @@
 				ADC650D6260D891F001E85AC /* Dom.swift in Sources */,
 				ADC650C6260D8444001E85AC /* ViewController.swift in Sources */,
 				ADC650C2260D8444001E85AC /* AppDelegate.swift in Sources */,
+				ADC650D9260D8C3F001E85AC /* HtmlParser.swift in Sources */,
+				ADC650DB260D8CB3001E85AC /* SourceHelper.swift in Sources */,
 				ADC650C4260D8444001E85AC /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
