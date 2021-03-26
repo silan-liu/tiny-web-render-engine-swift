@@ -149,7 +149,7 @@ public struct HTMLParser {
         while true {
             self.sourceHelper.consumeWhitespace()
             
-            // "</" 的判断，是为了无嵌套标签时，跳出循环。比如，<html></html>，在解析完<html>后，会重新调用 parseNodes 解析子标签
+            // "</" 的判断，目的是：当无嵌套标签时，能跳出循环。比如，<html></html>，在解析完<html>后，会重新调用 parseNodes 解析子标签
                  // 这时字符串是  </html>。
             if self.sourceHelper.eof() || self.sourceHelper.startsWith(s: "</") {
                 break
