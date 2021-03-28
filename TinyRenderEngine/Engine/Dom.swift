@@ -47,3 +47,22 @@ extension Node {
         self.children = children
     }
 }
+
+extension ElementData {
+    func getId() -> String {
+        return self.attributes["id"] ?? ""
+    }
+    
+    func getClasses() -> [String] {
+        if let classes = self.attributes["classes"] {
+            
+            let classList = classes.split(separator: " ")
+            
+            return classList.map { (str) -> String in
+                String(str)
+            }
+        }
+        
+        return []
+    }
+}

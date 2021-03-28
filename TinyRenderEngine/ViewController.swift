@@ -34,11 +34,11 @@ class ViewController: UIViewController {
         
         // html 解析
         var htmlParser = HTMLParser()
-        let dom = htmlParser.parse(input: html)
-        print(dom)
+        let root = htmlParser.parse(input: html)
+        print(root)
         
         let css = """
-             div.class1, #id {
+             div.test, #main {
                 padding: 0px;
                 margin: 10px;
                 position: absolute;
@@ -54,6 +54,11 @@ class ViewController: UIViewController {
         var cssParser = CSSParser()
         let styleSheet = cssParser.parse(source: css)
         print(styleSheet)
+        
+        // 样式关联处理
+        let styleProcessor = StyleProcessor()
+        let styleNode = styleProcessor.genStyleTree(root: root, styleSheet: styleSheet)
+        print(styleNode)
     }
     
     func test() {
