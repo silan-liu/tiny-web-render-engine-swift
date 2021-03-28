@@ -79,4 +79,14 @@ class CSSParser: XCTestCase {
         
         assert(s1.specificity() > s2.specificity())
     }
+    
+    func testSpecifity8() {
+        let simple1 = SimpleSelector(tagName: nil, id: "what", classes: [])
+        let s1 = CSSSelector.Simple(simple1)
+        
+        let simple2 = SimpleSelector(tagName: "hello", id: "22", classes: ["1"])
+        let s2 = CSSSelector.Simple(simple2)
+        
+        assert(s1.specificity() < s2.specificity())
+    }
 }

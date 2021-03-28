@@ -21,11 +21,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor.white
         
-        DispatchQueue.main.async {
-            print("main async");
-        }
-        
-        let input = """
+        let html = """
                     <html>
                     <body>
                         <h1>Title</h1>
@@ -37,8 +33,23 @@ class ViewController: UIViewController {
                 """
         
         var htmlParser = HTMLParser()
-        let dom = htmlParser.parse(input: input)
+        let dom = htmlParser.parse(input: html)
         print(dom)
+        
+        let css = """
+             div.class1, #id {
+                padding: 0px;
+                margin: 10px;
+             }
+
+            p {
+                font-size: 10px;
+            }
+        """
+        
+        var cssParser = CSSParser()
+        let styleSheet = cssParser.parse(source: css)
+        print(styleSheet)
     }
     
     func test() {

@@ -82,11 +82,12 @@ struct CSSParser {
     // 文本扫描辅助
     var sourceHelper: SourceHelper = SourceHelper()
     
-    // 对外提供的解析方法
+    // 对外提供的解析方法，返回样式表
     mutating public func parse(source: String) -> StyleSheet {
         self.sourceHelper.updateInput(input: source)
         
         let rules: [Rule] = parseRules()
+        
         return StyleSheet(rules: rules)
     }
     
@@ -96,6 +97,7 @@ struct CSSParser {
         
         while true {
             self.sourceHelper.consumeWhitespace()
+            
             if self.sourceHelper.eof() {
                 break
             }
@@ -103,10 +105,17 @@ struct CSSParser {
             let rule = parseRule()
             rules.append(rule)
         }
+        
         return rules
     }
     
     // 解析单条规则
+    /**
+     div.class, #id {
+        padding: 0px;
+        margin: 10px;
+     }
+     */
     mutating func parseRule() -> Rule {
         let selectors = parseSelectors()
         let declaration = parseDeclarations()
@@ -118,7 +127,7 @@ struct CSSParser {
     // tag.class1.class2, #id
     mutating func parseSelectors() -> [CSSSelector] {
         var selectors: [CSSSelector] = []
-        while true {
+        outerLoop: while true {
             let simpleSelector = parseSimpleSelector()
             
             // 包装成枚举
@@ -128,12 +137,14 @@ struct CSSParser {
             
             // 跳过空行
             self.sourceHelper.consumeWhitespace()
+            
+            // 判断下一个字符
             let c = self.sourceHelper.nextCharacter()
             
             switch c {
             // 到了属性部分，跳出循环
             case "{":
-                break
+                break outerLoop
                 
             case ",":
                 // 消耗掉当前 , 号
@@ -163,7 +174,7 @@ struct CSSParser {
     mutating func parseSimpleSelector() -> SimpleSelector {
         var selector = SimpleSelector(tagName: nil, id: nil, classes: [])
         
-        while !self.sourceHelper.eof() {
+        outerLoop: while !self.sourceHelper.eof() {
             switch self.sourceHelper.nextCharacter() {
             // id
             case "#":
@@ -189,7 +200,7 @@ struct CSSParser {
                 break
                 
             case _:
-                break
+                break outerLoop
             }
         }
         
@@ -219,7 +230,8 @@ struct CSSParser {
             self.sourceHelper.consumeWhitespace()
             
             // 如果遇到 }，说明规则声明结束
-            if self.sourceHelper.consumeCharacter() == "}" {
+            if self.sourceHelper.nextCharacter() == "}" {
+                self.sourceHelper.consumeCharacter()
                 break
             }
             
