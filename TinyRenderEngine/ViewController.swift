@@ -32,6 +32,7 @@ class ViewController: UIViewController {
                 </html>
                 """
         
+        // html 解析
         var htmlParser = HTMLParser()
         let dom = htmlParser.parse(input: html)
         print(dom)
@@ -47,6 +48,7 @@ class ViewController: UIViewController {
             }
         """
         
+        // css 解析
         var cssParser = CSSParser()
         let styleSheet = cssParser.parse(source: css)
         print(styleSheet)

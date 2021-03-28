@@ -95,6 +95,7 @@ struct CSSParser {
     mutating func parseRules() -> [Rule] {
         var rules:[Rule] = []
         
+        // 循环解析规则
         while true {
             self.sourceHelper.consumeWhitespace()
             
@@ -231,7 +232,7 @@ struct CSSParser {
             
             // 如果遇到 }，说明规则声明结束
             if self.sourceHelper.nextCharacter() == "}" {
-                self.sourceHelper.consumeCharacter()
+                _ = self.sourceHelper.consumeCharacter()
                 break
             }
             
