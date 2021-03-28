@@ -101,21 +101,27 @@ struct StyleProcessor {
     
     // 节点的 id，tag，class 是否与选择器 simpleSelector 匹配，若一个不匹配，则返回 false
     func matchSelector(node: ElementData, simpleSelector: SimpleSelector) -> Bool {
-        // tag
-        if node.tagName != simpleSelector.tagName {
+        
+        // tag，css 中存在 tag 且不相等
+        if simpleSelector.tagName != nil && node.tagName != simpleSelector.tagName {
             return false
         }
         
         // id
         let id = node.getId()
-        if id != simpleSelector.id {
+        
+        // css 中存在 id 且不相等
+        if simpleSelector.id != nil && id != simpleSelector.id {
             return false
         }
         
         // class
         let classes = node.getClasses()
-        for cls in classes {
-            if !simpleSelector.classes.contains(cls) {
+        let selectorClasses = simpleSelector.classes
+        
+        // 节点元素的 class 中全部包含 selector 中的 class
+        for cls in selectorClasses {
+            if !classes.contains(cls) {
                 return false
             }
         }

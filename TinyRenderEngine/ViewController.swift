@@ -22,14 +22,8 @@ class ViewController: UIViewController {
         self.view.backgroundColor = UIColor.white
         
         let html = """
-                    <html>
-                    <body>
-                        <h1>Title</h1>
-                        <div id="main" class="test">
-                            <p>Hello <em>world</em>!</p>
-                        </div>
-                    </body>
-                </html>
+                    <div id="main" class="test">
+                    </div>
                 """
         
         // html 解析
@@ -38,7 +32,7 @@ class ViewController: UIViewController {
         print(root)
         
         let css = """
-             div.test, #main {
+             .test {
                 padding: 0px;
                 margin: 10px;
                 position: absolute;

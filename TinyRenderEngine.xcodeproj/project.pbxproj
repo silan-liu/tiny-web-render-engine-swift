@@ -21,6 +21,8 @@
 		ADC650F0261003C6001E85AC /* CSSParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650EF261003C5001E85AC /* CSSParser.swift */; };
 		ADC650F2261018B1001E85AC /* CSSParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650F1261018B1001E85AC /* CSSParser.swift */; };
 		ADC650F42610274F001E85AC /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650F32610274F001E85AC /* Style.swift */; };
+		ADC650F626103AD4001E85AC /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = ADC650F526103AD4001E85AC /* test.html */; };
+		ADC650F826103AF0001E85AC /* test.css in Resources */ = {isa = PBXBuildFile; fileRef = ADC650F726103AF0001E85AC /* test.css */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +54,8 @@
 		ADC650EF261003C5001E85AC /* CSSParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSParser.swift; sourceTree = "<group>"; };
 		ADC650F1261018B1001E85AC /* CSSParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSParser.swift; sourceTree = "<group>"; };
 		ADC650F32610274F001E85AC /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		ADC650F526103AD4001E85AC /* test.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
+		ADC650F726103AF0001E85AC /* test.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = test.css; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +125,8 @@
 		ADC650DE260D9D28001E85AC /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				ADC650F526103AD4001E85AC /* test.html */,
+				ADC650F726103AF0001E85AC /* test.css */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -216,6 +222,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADC650F626103AD4001E85AC /* test.html in Resources */,
+				ADC650F826103AF0001E85AC /* test.css in Resources */,
 				ADC650CE260D8447001E85AC /* LaunchScreen.storyboard in Resources */,
 				ADC650CB260D8447001E85AC /* Assets.xcassets in Resources */,
 				ADC650C9260D8444001E85AC /* Main.storyboard in Resources */,

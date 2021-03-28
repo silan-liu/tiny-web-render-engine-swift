@@ -49,18 +49,19 @@ extension Node {
 }
 
 extension ElementData {
-    func getId() -> String {
-        return self.attributes["id"] ?? ""
+    func getId() -> String? {
+        return self.attributes["id"]
     }
     
     func getClasses() -> [String] {
-        if let classes = self.attributes["classes"] {
+        if let classes = self.attributes["class"] {
             
             let classList = classes.split(separator: " ")
-            
+
             return classList.map { (str) -> String in
                 String(str)
             }
+            
         }
         
         return []
