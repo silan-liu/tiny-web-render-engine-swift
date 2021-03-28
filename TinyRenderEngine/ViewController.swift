@@ -21,6 +21,10 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor.white
         
+        DispatchQueue.main.async {
+            print("main async");
+        }
+        
         let input = """
                     <html>
                     <body>
@@ -59,6 +63,8 @@ class ViewController: UIViewController {
         let imageView = UIImageView(image: image)
         imageView.frame = CGRect.init(x: 100, y: 100, width: 100, height: 100)
         self.view.addSubview(imageView)
+        
+        print("test done")
     }
     
     func imageFromARGB32Bitmap(pixels: [PixelData], width: Int, height: Int) -> UIImage? {

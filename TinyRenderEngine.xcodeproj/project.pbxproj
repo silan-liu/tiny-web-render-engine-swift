@@ -18,6 +18,7 @@
 		ADC650DD260D9536001E85AC /* HTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650DC260D9536001E85AC /* HTMLParser.swift */; };
 		ADC650E6260D9EA4001E85AC /* TinyRenderEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650E5260D9EA4001E85AC /* TinyRenderEngineTests.swift */; };
 		ADC650EE260D9EC8001E85AC /* SourceHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650ED260D9EC8001E85AC /* SourceHelperTests.swift */; };
+		ADC650F0261003C6001E85AC /* CSSParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650EF261003C5001E85AC /* CSSParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		ADC650E5260D9EA4001E85AC /* TinyRenderEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinyRenderEngineTests.swift; sourceTree = "<group>"; };
 		ADC650E7260D9EA4001E85AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADC650ED260D9EC8001E85AC /* SourceHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceHelperTests.swift; sourceTree = "<group>"; };
+		ADC650EF261003C5001E85AC /* CSSParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSSParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				ADC650D5260D891F001E85AC /* Dom.swift */,
 				ADC650DA260D8CB3001E85AC /* SourceHelper.swift */,
 				ADC650DC260D9536001E85AC /* HTMLParser.swift */,
+				ADC650EF261003C5001E85AC /* CSSParser.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 				ADC650D6260D891F001E85AC /* Dom.swift in Sources */,
 				ADC650C6260D8444001E85AC /* ViewController.swift in Sources */,
 				ADC650C2260D8444001E85AC /* AppDelegate.swift in Sources */,
+				ADC650F0261003C6001E85AC /* CSSParser.swift in Sources */,
 				ADC650DD260D9536001E85AC /* HTMLParser.swift in Sources */,
 				ADC650DB260D8CB3001E85AC /* SourceHelper.swift in Sources */,
 				ADC650C4260D8444001E85AC /* SceneDelegate.swift in Sources */,
