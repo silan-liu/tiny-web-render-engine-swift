@@ -127,7 +127,9 @@ struct CSSParser {
     // 解析组合选择器，选择器以","分隔，返回数组
     // tag.class1.class2, #id
     mutating func parseSelectors() -> [CSSSelector] {
+        
         var selectors: [CSSSelector] = []
+        
         outerLoop: while true {
             let simpleSelector = parseSimpleSelector()
             
@@ -285,14 +287,19 @@ struct CSSParser {
         }
     }
     
-    // 解析色值，只支持十六进制，以 # 开头
+    // 解析色值，只支持十六进制，以 # 开头, #897722
     mutating func parseColor() -> Value {
         assert(self.sourceHelper.consumeCharacter() == "#")
         
         let r = parseHexPair()
         let g = parseHexPair()
         let b = parseHexPair()
-        let a = parseHexPair()
+        var a: UInt8 = 255
+        
+        // 如果有 alpha
+        if self.sourceHelper.nextCharacter() != ";" {
+            a = parseHexPair()
+        }
         
         return Value.Color(r, g, b, a)
     }
@@ -300,6 +307,8 @@ struct CSSParser {
     mutating func parseHexPair() -> UInt8 {
         // 取出 2 位字符
         let s = self.sourceHelper.consumeNCharacter(count: 2)
+        
+        print("parseHexPair:\(s)")
         
         // 转化为整数
         let value = UInt8(s, radix: 16) ?? 0

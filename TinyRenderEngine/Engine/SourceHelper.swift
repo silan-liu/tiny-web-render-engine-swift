@@ -56,9 +56,9 @@ extension SourceHelper {
     
     // 消费 n 个字符
     mutating func consumeNCharacter(count: Int) -> String {
-        let endIndex = input.index(pos, offsetBy: count)
+        let endIndex = input.index(pos, offsetBy: count - 1)
         let s = input[pos...endIndex]
-        pos = endIndex
+        pos = input.index(pos, offsetBy: count)
         return String(s)
     }
     

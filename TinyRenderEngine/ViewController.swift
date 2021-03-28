@@ -41,10 +41,12 @@ class ViewController: UIViewController {
              div.class1, #id {
                 padding: 0px;
                 margin: 10px;
+                position: absolute;
              }
 
             p {
                 font-size: 10px;
+                color: #ff908912;
             }
         """
         
