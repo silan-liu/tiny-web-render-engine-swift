@@ -15,13 +15,13 @@ struct StyleSheet {
 // css 规则结构定义
 struct Rule {
     // 选择器
-    let selectors: [Selector]
+    let selectors: [CSSSelector]
     
     // 声明的属性
     let declarations: [Declaration]
 }
 
-enum Selector {
+enum CSSSelector {
     case Simple(SimpleSelector)
 }
 
@@ -58,10 +58,10 @@ enum Unit {
 // 用于选择器排序，优先级从高到低分别是 id, class, tag
 typealias Specifity = (Int, Int, Int)
 
-extension Selector {
+extension CSSSelector {
     public func specificity() -> Specifity {
      
-        if case Selector.Simple(let simple) = self {
+        if case CSSSelector.Simple(let simple) = self {
             // 存在 id
             let a = simple.id == nil ? 0 : 1
             
@@ -116,13 +116,13 @@ struct CSSParser {
     
     // 解析组合选择器，选择器以","分隔，返回数组
     // tag.class1.class2, #id
-    mutating func parseSelectors() -> [Selector] {
-        var selectors: [Selector] = []
+    mutating func parseSelectors() -> [CSSSelector] {
+        var selectors: [CSSSelector] = []
         while true {
             let simpleSelector = parseSimpleSelector()
             
             // 包装成枚举
-            let selector = Selector.Simple(simpleSelector)
+            let selector = CSSSelector.Simple(simpleSelector)
             
             selectors.append(selector)
             
@@ -149,6 +149,13 @@ struct CSSParser {
                 break
             }
         }
+        
+        // 对 selector 进行排序，优先级从高到低
+        selectors.sort { (s1, s2) -> Bool in
+            s1.specificity() > s2.specificity()
+        }
+        
+        return selectors
     }
     
     // 解析选择器
@@ -195,10 +202,124 @@ struct CSSParser {
         return self.sourceHelper.consumeWhile(test: valideIdentifierChar)
     }
     
+    // 解析声明的属性列表
+    /**
+     {
+        margin-top: 10px;
+        margin-bottom: 10px
+     }
+     */
     mutating func parseDeclarations() -> [Declaration] {
         var declarations: [Declaration] = []
         
+        // 以 { 开头
+        assert(self.sourceHelper.consumeCharacter() == "{")
+        
+        while true {
+            self.sourceHelper.consumeWhitespace()
+            
+            // 如果遇到 }，说明规则声明结束
+            if self.sourceHelper.consumeCharacter() == "}" {
+                break
+            }
+            
+            // 解析规则
+            let declaration = parseDeclaration()
+            declarations.append(declaration)
+        }
+        
         return declarations
+    }
+    
+    // 解析单个属性，margin-top: 10px;
+    mutating func parseDeclaration() -> Declaration {
+        let name = parseIdentifier()
+        
+        // 跳过空白字符
+        self.sourceHelper.consumeWhitespace()
+        
+        assert(self.sourceHelper.consumeCharacter() == ":")
+        
+        // 跳过空白字符
+        self.sourceHelper.consumeWhitespace()
+
+        let value = parseValue()
+        
+        // 跳过空白字符
+        self.sourceHelper.consumeWhitespace()
+        
+        // 最后应该以 ; 结束
+        assert(self.sourceHelper.consumeCharacter() == ";")
+        
+        return Declaration(name: name, value: value)
+    }
+    
+    // 解析属性值，可能包括色值、长度、普通字符串
+    mutating func parseValue() -> Value {
+        switch self.sourceHelper.nextCharacter() {
+        // 色值
+        case "#":
+            return parseColor()
+            
+        // 数字长度
+        case let c where c.isNumber:
+            return parseLength()
+            
+        case _:
+            // 普通值
+            let keyword = parseIdentifier()
+            return Value.Keyword(keyword)
+        }
+    }
+    
+    // 解析色值，只支持十六进制，以 # 开头
+    mutating func parseColor() -> Value {
+        assert(self.sourceHelper.consumeCharacter() == "#")
+        
+        let r = parseHexPair()
+        let g = parseHexPair()
+        let b = parseHexPair()
+        let a = parseHexPair()
+        
+        return Value.Color(r, g, b, a)
+    }
+    
+    mutating func parseHexPair() -> UInt8 {
+        // 取出 2 位字符
+        let s = self.sourceHelper.consumeNCharacter(count: 2)
+        
+        // 转化为整数
+        let value = UInt8(s, radix: 16) ?? 0
+        
+        return value
+    }
+    
+    // 解析长度
+    mutating func parseLength() -> Value {
+        let floatValue = parseFloat()
+        let unit = parseUnit()
+        
+        return Value.Length(floatValue, unit)
+    }
+    
+    // 解析浮点数
+    mutating func parseFloat() -> Float {
+        let s = self.sourceHelper.consumeWhile { (c) -> Bool in
+            c.isNumber || c == "."
+        }
+        
+        let floatValue = (s as NSString).floatValue
+        return floatValue
+    }
+    
+    // 解析单位
+    mutating func parseUnit() -> Unit {
+        let unit = parseIdentifier()
+        if unit == "px" {
+            return Unit.Px
+        }
+        
+        assert(false, "Unexpected unit")
     }
     
     // 有效标识，数字、字母、_-

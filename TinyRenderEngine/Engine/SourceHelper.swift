@@ -54,6 +54,14 @@ extension SourceHelper {
         return result
     }
     
+    // 消费 n 个字符
+    mutating func consumeNCharacter(count: Int) -> String {
+        let endIndex = input.index(pos, offsetBy: count)
+        let s = input[pos...endIndex]
+        pos = endIndex
+        return String(s)
+    }
+    
     // 如果满足 test 条件，则循环消费字符，返回满足条件的字符串
     mutating func consumeWhile(test: (Character) -> Bool) -> String {
         var result = ""
