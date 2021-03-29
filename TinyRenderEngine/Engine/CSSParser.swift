@@ -198,7 +198,7 @@ struct CSSParser {
                 break
                 
             // tag
-            case let c where valideIdentifierChar(c: c):
+            case let c where validIdentifierChar(c: c):
                 selector.tagName = parseIdentifier()
                 break
                 
@@ -213,7 +213,7 @@ struct CSSParser {
     // 解析标识符
     mutating func parseIdentifier() -> String {
         // 字母数字-_
-        return self.sourceHelper.consumeWhile(test: valideIdentifierChar)
+        return self.sourceHelper.consumeWhile(test: validIdentifierChar)
     }
     
     // 解析声明的属性列表
@@ -345,7 +345,7 @@ struct CSSParser {
     }
     
     // 有效标识，数字、字母、_-
-    func valideIdentifierChar(c: Character) -> Bool {
+    func validIdentifierChar(c: Character) -> Bool {
         if c.isNumber || c.isLetter || c == "-" || c == "_" {
             return true
         }
