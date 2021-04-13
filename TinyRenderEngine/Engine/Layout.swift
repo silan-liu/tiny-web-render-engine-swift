@@ -64,6 +64,7 @@ struct LayoutBox {
     
     init(styleNode: StyleNode) {
         
+        // 根据设定的 display 属性，返回对应的布局类型
         let display = styleNode.getDisplay()
         
         var boxType: BoxType = .AnonymousBlock
@@ -76,6 +77,7 @@ struct LayoutBox {
             
         case .Block:
             boxType = .BlockNode(styleNode)
+            
             break
             
         case .None:
@@ -100,6 +102,55 @@ struct LayoutBox {
             return nil
         }
     }
+    
+    // 布局，只有 block 类型才进行布局
+    func layout(containingBlock: Dimensions) {
+        
+        switch self.boxType {
+        
+        case .BlockNode(_):
+            layoutBlock(containingBlock: containingBlock)
+            break
+            
+        default:
+            break;
+        }
+    }
+    
+    // 计算 block 的布局
+    func layoutBlock(containingBlock: Dimensions) {
+        // 计算宽度
+        calculateBlockWidth(containingBlock: containingBlock)
+        
+        // 计算位置
+        calculateBlockPosition(containingBlock: containingBlock)
+        
+        // 计算子节点布局
+        layoutBlockChildren()
+        
+        // 根据所有子节点计算高度
+        calculateBlockHeight()
+    }
+    
+    // 计算宽度
+    func calculateBlockWidth(containingBlock: Dimensions) {
+        
+    }
+    
+    // 计算位置
+    func calculateBlockPosition(containingBlock: Dimensions) {
+        
+    }
+    
+    // 计算子节点布局
+    func layoutBlockChildren() {
+        
+    }
+    
+    // 根据所有子节点计算高度
+    func calculateBlockHeight() {
+        
+    }
 }
 
 extension LayoutBox {
@@ -115,6 +166,7 @@ extension LayoutBox {
             return self
             
         case .BlockNode(_):
+            // 取出最后一个子节点
             let lastChild = self.children.last
             
             // 如果已经是匿名 block，不做处理
@@ -123,6 +175,8 @@ extension LayoutBox {
             } else {
                 // 生成匿名 block
                 let anonymousBlock = LayoutBox(boxType: .AnonymousBlock)
+                
+                // 添加匿名 block
                 self.children.append(anonymousBlock)
             }
             
