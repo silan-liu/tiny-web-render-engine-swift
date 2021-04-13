@@ -7,6 +7,7 @@
 
 import Foundation
 
+// 布局类型
 enum BoxType {
     case AnonymousBlock
     case BlockNode(StyleNode)
@@ -20,6 +21,7 @@ struct Rect {
     var height: Double = 0.0
 }
 
+// 边距定义
 struct EdgeSizes {
     var left: Double = 0.0
     var right: Double = 0.0
