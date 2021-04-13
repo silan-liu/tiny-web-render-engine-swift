@@ -23,6 +23,44 @@ struct StyleNode {
 // Specifity 同样用于排序
 typealias MatchedRule = (Specifity, Rule)
 
+// display
+enum Display {
+    case Block
+    case Inline
+    case None
+}
+
+extension StyleNode {
+    // 查找某个 css 属性
+    func getValue(name: String) -> Value? {
+        return self.styleMap[name]
+    }
+    
+    // 先查找 name 的值，不存在，则查找 fallbackName 的值，若仍然不存在，则返回 default
+    func lookup(name: String, fallbackName: String, default: Value) -> Value {
+        
+    }
+    
+    // 根据 display 属性，返回对应的枚举值
+    func getDisplay() -> Display {
+        let displayValue = getValue(name: "display")
+        
+        if let .Keyword(display) = displayValue {
+            switch display {
+            
+            case "block":
+                return .Block
+                
+            case "none":
+                return .None
+                
+            default:
+                return .Inline
+            }
+        }
+    }
+}
+
 // 样式处理，将 styleSheet 中的样式关联到节点
 struct StyleProcessor {
     // 生成样式树
