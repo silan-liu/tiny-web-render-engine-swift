@@ -37,15 +37,24 @@ extension StyleNode {
     }
     
     // 先查找 name 的值，不存在，则查找 fallbackName 的值，若仍然不存在，则返回 default
-    func lookup(name: String, fallbackName: String, default: Value) -> Value {
+    func lookup(name: String, fallbackName: String, defaultValue: Value) -> Value {
+        var value = getValue(name: name)
+        if (value == nil) {
+            value = getValue(name: fallbackName)
+            
+            if (value == nil) {
+                return defaultValue
+            }
+        }
         
+        return value ?? defaultValue
     }
     
     // 根据 display 属性，返回对应的枚举值
     func getDisplay() -> Display {
         let displayValue = getValue(name: "display")
         
-        if let .Keyword(display) = displayValue {
+        if case let .Keyword(display) = displayValue {
             switch display {
             
             case "block":
@@ -58,6 +67,8 @@ extension StyleNode {
                 return .Inline
             }
         }
+        
+        return .Inline
     }
 }
 

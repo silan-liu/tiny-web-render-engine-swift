@@ -100,6 +100,36 @@ struct LayoutBox {
     }
 }
 
+extension LayoutBox {
+    // 获取 inline 节点的容器。如果 block 包含一个 inline 节点，它会创建一个匿名 block 来包裹该 inline
+    mutating func getInlineContainer() -> LayoutBox {
+        
+        switch self.boxType {
+        
+        case .AnonymousBlock:
+            return self
+            
+        case .InlineNode(_):
+            return self
+            
+        case .BlockNode(_):
+            let lastChild = self.children.last
+            
+            // 如果已经是匿名 block，不做处理
+            if case .AnonymousBlock = lastChild?.boxType  {
+                
+            } else {
+                // 生成匿名 block
+                let anonymousBlock = LayoutBox(boxType: .AnonymousBlock)
+                self.children.append(anonymousBlock)
+            }
+            
+            // 返回最后子节点
+            return self.children.last!
+        }
+    }
+}
+
 struct LayoutProcessor {
     // 生成布局树
     func genLayoutTree(styleNode: StyleNode, containingBlock: Dimensions) -> LayoutBox {
@@ -116,4 +146,6 @@ struct LayoutProcessor {
         
         return root
     }
+    
+    
 }
