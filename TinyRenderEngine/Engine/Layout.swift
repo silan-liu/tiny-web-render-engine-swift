@@ -15,18 +15,18 @@ enum BoxType {
 }
 
 struct Rect {
-    var x: Double = 0.0
-    var y: Double = 0.0
-    var width: Double = 0.0
-    var height: Double = 0.0
+    var x: Float = 0.0
+    var y: Float = 0.0
+    var width: Float = 0.0
+    var height: Float = 0.0
 }
 
 // 边距定义
 struct EdgeSizes {
-    var left: Double = 0.0
-    var right: Double = 0.0
-    var top: Double = 0.0
-    var bottom: Double = 0.0
+    var left: Float = 0.0
+    var right: Float = 0.0
+    var top: Float = 0.0
+    var bottom: Float = 0.0
 }
 
 struct Dimensions {
@@ -43,6 +43,27 @@ struct Dimensions {
     var border: EdgeSizes = EdgeSizes()
 }
 
+extension Rect {
+    // 向外扩展边距
+    func expandBy(edge: EdgeSizes) -> Rect {
+        return Rect(x: x - edge.left, y: y - edge.top, width: width + edge.left + edge.right, height: height + edge.top + edge.bottom)
+    }
+}
+
+extension Dimensions {
+    func paddingBox() -> Rect {
+        return content.expandBy(edge: padding)
+    }
+    
+    func borderBox() -> Rect {
+        return paddingBox().expandBy(edge: border)
+    }
+    
+    func marginBox() -> Rect {
+        return borderBox().expandBy(edge: margin)
+    }
+}
+
 // 布局树
 struct LayoutBox {
     
@@ -54,7 +75,9 @@ struct LayoutBox {
     
     // 子节点布局
     var children: [LayoutBox]
-    
+}
+
+extension LayoutBox {
     init(boxType: BoxType) {
         
         self.boxType = boxType
@@ -104,7 +127,7 @@ struct LayoutBox {
     }
     
     // 布局，只有 block 类型才进行布局
-    func layout(containingBlock: Dimensions) {
+    mutating func layout(containingBlock: Dimensions) {
         
         switch self.boxType {
         
@@ -118,7 +141,7 @@ struct LayoutBox {
     }
     
     // 计算 block 的布局
-    func layoutBlock(containingBlock: Dimensions) {
+   mutating func layoutBlock(containingBlock: Dimensions) {
         // 计算宽度
         calculateBlockWidth(containingBlock: containingBlock)
         
@@ -139,21 +162,57 @@ struct LayoutBox {
     
     // 计算位置
     func calculateBlockPosition(containingBlock: Dimensions) {
-        
+        // 计算 x，y，竖直方向间距
+        if let styleNode = getStyleNode() {
+            var d = self.dimensions
+            
+            let zero = Value.Length(0.0, .Px)
+            
+            // margin 竖直方向
+            d.margin.top = styleNode.lookup(name: "margin-top", fallbackName: "margin", defaultValue: zero).toPx()
+            d.margin.bottom = styleNode.lookup(name: "margin-bottom", fallbackName: "margin", defaultValue: zero).toPx()
+            
+            // padding 竖直方向
+            d.padding.top = styleNode.lookup(name: "padding-top", fallbackName: "padding", defaultValue: zero).toPx()
+            d.padding.bottom = styleNode.lookup(name: "padding-bottom", fallbackName: "padding", defaultValue: zero).toPx()
+            
+            // border 竖直方向
+            d.border.top = styleNode.lookup(name: "border-top-width", fallbackName: "border-width", defaultValue: zero).toPx()
+            d.border.bottom = styleNode.lookup(name: "border-bottom-width", fallbackName: "border-width", defaultValue: zero).toPx()
+            
+            // 子节点的 x = 父容器 x + margin + border + padding
+            d.content.x = containingBlock.content.x + d.margin.left + d.border.left + d.padding.left
+            
+            // 子节点 y
+            // 现在父容器的高度 = 所有子节点高度之和（包括所有边距），在计算 layoutBlockChildren 子节点布局时会更新父容器高度
+            d.content.y = containingBlock.content.y + containingBlock.content.height + d.margin.top + d.border.top + d.padding.top
+        }
     }
     
     // 计算子节点布局
-    func layoutBlockChildren() {
-        
+    mutating func layoutBlockChildren() {
+        for var child in self.children {
+            child.layout(containingBlock: self.dimensions)
+            
+            // 计算整体高度
+            self.dimensions.content.height += child.dimensions.marginBox().height
+        }
     }
     
-    // 根据所有子节点计算高度
-    func calculateBlockHeight() {
+    // 如果设置了 height，则取该值
+    mutating func calculateBlockHeight() {
         
+        if let styleNode = getStyleNode() {
+            // 获取设置的 height
+            if let heightValue = styleNode.getValue(name: "height") {
+                
+                if case Value.Length(let height, .Px) = heightValue {
+                    self.dimensions.content.height = height
+                }
+            }
+        }
     }
-}
 
-extension LayoutBox {
     // 获取 inline 节点的容器。如果 block 包含一个 inline 节点，它会创建一个匿名 block 来包裹该 inline
     mutating func getInlineContainer() -> LayoutBox {
         
@@ -186,22 +245,43 @@ extension LayoutBox {
     }
 }
 
+// 布局处理器
 struct LayoutProcessor {
     // 生成布局树
-    func genLayoutTree(styleNode: StyleNode, containingBlock: Dimensions) -> LayoutBox {
+    mutating func genLayoutTree(styleNode: StyleNode, containingBlock: Dimensions) -> LayoutBox {
         var rootBox = buildLayoutBox(styleNode: styleNode)
-        
+       
         // 布局
+        rootBox.layout(containingBlock: containingBlock)
         
         return rootBox
     }
     
     // 递归确定每个节点的 display 数据
-    func buildLayoutBox(styleNode: StyleNode) -> LayoutBox {
-        let root = LayoutBox(styleNode: styleNode)
+    mutating func buildLayoutBox(styleNode: StyleNode) -> LayoutBox {
+        var root = LayoutBox(styleNode: styleNode)
+        
+        for child in styleNode.children {
+            switch child.getDisplay() {
+            
+            case .Block:
+                let childLayoutBox = buildLayoutBox(styleNode: child)
+                root.children.append(childLayoutBox)
+                break
+                
+            case .Inline:
+                let childLayoutBox = buildLayoutBox(styleNode: child)
+                
+                // 找到 container
+                var container = root.getInlineContainer()
+                container.children.append(childLayoutBox)
+                break
+                
+            default:
+                break
+            }
+        }
         
         return root
     }
-    
-    
 }

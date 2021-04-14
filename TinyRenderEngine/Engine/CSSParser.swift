@@ -78,6 +78,16 @@ extension CSSSelector {
     }
 }
 
+extension Value {
+    func toPx() -> Float {
+        if case .Length(let len, .Px) = self {
+            return len
+        }
+        
+        return 0.0
+    }
+}
+
 struct CSSParser {
     // 文本扫描辅助
     var sourceHelper: SourceHelper = SourceHelper()
