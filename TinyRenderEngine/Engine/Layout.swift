@@ -228,7 +228,7 @@ extension LayoutBox {
             // 取出最后一个子节点
             let lastChild = self.children.last
             
-            // 如果已经是匿名 block，不做处理
+            // 如果已经是匿名 block，不做处理，稍后返回
             if case .AnonymousBlock = lastChild?.boxType  {
                 
             } else {
