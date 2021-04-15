@@ -155,9 +155,108 @@ extension LayoutBox {
         calculateBlockHeight()
     }
     
-    // 计算宽度
+    // 根据父容器宽度计算节点 x 方向的布局数据
     func calculateBlockWidth(containingBlock: Dimensions) {
+       
+        let result = getStyleNode()
         
+        guard let styleNode = result else {
+            return
+        }
+        
+        let auto = Value.Keyword("auto")
+        var width = styleNode.getValue(name: "width") ?? auto
+        
+        let zero = Value.Length(0.0, .Px)
+        
+        // margin
+        var marginLeft = styleNode.lookup(name: "margin-left", fallbackName: "margin", defaultValue: zero)
+        var marginRight = styleNode.lookup(name: "margin-right", fallbackName: "margin", defaultValue: zero)
+
+        // border
+        let borderLeft = styleNode.lookup(name: "border-left-width", fallbackName: "border-width", defaultValue: zero);
+        let borderRight = styleNode.lookup(name: "border-right-width", fallbackName: "border-width", defaultValue: zero);
+        
+        // padding
+        let paddingLeft = styleNode.lookup(name: "padding-left", fallbackName: "padding", defaultValue: zero);
+        let paddingRight = styleNode.lookup(name: "padding-right", fallbackName: "padding", defaultValue: zero);
+        
+        // 计算总和，边距+宽度
+        let totalWidth = marginLeft.toPx() + marginRight.toPx() + borderLeft.toPx() + borderRight.toPx() + paddingLeft.toPx() + paddingRight.toPx() + width.toPx()
+        
+        // 宽度非 auto
+        if (width != auto) {
+            // 整体宽度大于父容器宽度，修改 margin-left，margin-right 值
+            if totalWidth > containingBlock.content.width {
+                if marginLeft == auto {
+                    marginLeft = .Length(0.0, .Px)
+                }
+                
+                if marginRight == auto {
+                    marginRight = .Length(0.0, .Px)
+                }
+            }
+        }
+        
+        // 宽度与父容器宽度有差，根据情况调整 margin-left/margin-right/width 的值
+        let underflow = containingBlock.content.width - totalWidth
+        
+        // 是否为 auto
+        let autoWidth = (width == auto)
+        let autoMarginLeft = (marginLeft == auto)
+        let autoMarginRight = (marginRight == auto)
+
+        if (!autoWidth && !autoMarginLeft) {
+            if (autoMarginRight) {
+                // margin-right 为 auto，设置为剩余空间
+                marginRight = .Length(underflow, .Px)
+            } else {
+                // 修改 margin-right
+                marginRight = .Length(marginRight.toPx() + underflow, .Px)
+            }
+            
+        } else if (!autoWidth && autoMarginLeft) {
+            if (autoMarginRight) {
+                // margin-left、margin-right 都为 auto，平分空间
+                marginLeft = .Length(underflow / 2.0, .Px)
+                marginRight = .Length(underflow / 2.0, .Px)
+            } else {
+                // margin-left == auto, 设置为剩余空间
+                marginLeft = .Length(underflow, .Px)
+            }
+        } else if (autoWidth) {
+            // marginLeft 为 auto，调整至 0
+            if autoMarginLeft {
+                marginLeft = .Length(0.0, .Px)
+            }
+            
+            // marginRight 为 auto，调整至 0
+            if autoMarginRight {
+                marginRight = .Length(0.0, .Px)
+            }
+            
+            // 小于父容器宽度
+            if underflow >= 0.0 {
+                width = .Length(underflow, .Px)
+            } else {
+                // 超出宽度，减小 margin-right
+                width = .Length(0.0, .Px)
+                marginRight = .Length(marginRight.toPx() + underflow, .Px)
+            }
+        }
+        
+        // 设置盒子模型数据
+        var d = self.dimensions
+        d.content.width = width.toPx()
+        
+        d.padding.left = paddingLeft.toPx()
+        d.padding.right = paddingRight.toPx()
+        
+        d.border.left = borderLeft.toPx()
+        d.border.right = borderRight.toPx()
+        
+        d.margin.left = marginLeft.toPx()
+        d.margin.right = marginRight.toPx()
     }
     
     // 计算位置

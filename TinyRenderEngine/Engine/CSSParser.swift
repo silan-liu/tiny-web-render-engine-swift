@@ -51,6 +51,27 @@ enum Value {
     case Length(Float, Unit)
 }
 
+extension Value: Equatable {
+   
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        if case .Keyword(let l) = lhs, case .Keyword(let r) = rhs {
+            return l == r
+        }
+        
+        
+        if case .Color(let lr, let lg, let lb, let la) = lhs, case .Color(let rr, let rg, let rb, let ra) = rhs {
+            return lr == rr && lg == rg && lb == rb && la == ra
+        }
+        
+        if case .Length(let l, _) = lhs, case .Length(let r, _) = rhs {
+            return l == r
+        }
+        
+        return true
+    }
+
+}
+
 enum Unit {
     case Px
 }
