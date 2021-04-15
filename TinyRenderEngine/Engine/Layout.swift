@@ -155,7 +155,7 @@ extension LayoutBox {
         calculateBlockHeight()
     }
     
-    // 根据父容器宽度计算节点 x 方向的布局数据
+    // 根据父容器宽度计算节点 x 方向的布局数据，包括 width/margin/border/padding
     func calculateBlockWidth(containingBlock: Dimensions) {
        
         let result = getStyleNode()
@@ -164,7 +164,11 @@ extension LayoutBox {
             return
         }
         
+        // css 中 auto 表示由浏览器自己计算一个值。
+        // 当 width 为 auto 时，表示假若在有边距的情况下，尽可能的将自身宽度设置为父容器的宽度。
+        // 当 margin 为 auto 时，表示浏览器选择一个合适的边距。
         let auto = Value.Keyword("auto")
+        
         var width = styleNode.getValue(name: "width") ?? auto
         
         let zero = Value.Length(0.0, .Px)
@@ -181,7 +185,7 @@ extension LayoutBox {
         let paddingLeft = styleNode.lookup(name: "padding-left", fallbackName: "padding", defaultValue: zero);
         let paddingRight = styleNode.lookup(name: "padding-right", fallbackName: "padding", defaultValue: zero);
         
-        // 计算总和，边距+宽度
+        // 计算总和，所有边距+宽度
         let totalWidth = marginLeft.toPx() + marginRight.toPx() + borderLeft.toPx() + borderRight.toPx() + paddingLeft.toPx() + paddingRight.toPx() + width.toPx()
         
         // 宽度非 auto
@@ -205,41 +209,53 @@ extension LayoutBox {
         let autoWidth = (width == auto)
         let autoMarginLeft = (marginLeft == auto)
         let autoMarginRight = (marginRight == auto)
-
-        if (!autoWidth && !autoMarginLeft) {
-            if (autoMarginRight) {
-                // margin-right 为 auto，设置为剩余空间
-                marginRight = .Length(underflow, .Px)
-            } else {
-                // 修改 margin-right
-                marginRight = .Length(marginRight.toPx() + underflow, .Px)
-            }
+        
+        // 宽度非 auto
+        if (!autoWidth) {
             
-        } else if (!autoWidth && autoMarginLeft) {
-            if (autoMarginRight) {
-                // margin-left、margin-right 都为 auto，平分空间
-                marginLeft = .Length(underflow / 2.0, .Px)
-                marginRight = .Length(underflow / 2.0, .Px)
+            // marginLeft 为 auto
+            if (autoMarginLeft) {
+                
+                // marginRight 为 auto
+                if (autoMarginRight) {
+                    
+                    // margin-left、margin-right 都为 auto。在 totalWidth 不占空间，平分空间
+                    marginLeft = .Length(underflow / 2.0, .Px)
+                    marginRight = .Length(underflow / 2.0, .Px)
+                    
+                } else {
+                    // 只有 margin-left 为 auto, 在 totalWidth 不占空间，设置为剩余空间
+                    marginLeft = .Length(underflow, .Px)
+                }
             } else {
-                // margin-left == auto, 设置为剩余空间
-                marginLeft = .Length(underflow, .Px)
+                if (autoMarginRight) {
+                    // margin-right 为 auto，在 totalWidth 不占空间，设置为剩余空间
+                    marginRight = .Length(underflow, .Px)
+                } else {
+                    // 修改 margin-right
+                    marginRight = .Length(marginRight.toPx() + underflow, .Px)
+                }
             }
-        } else if (autoWidth) {
-            // marginLeft 为 auto，调整至 0
+        } else {
+            // 宽度是 auto，此时 width.to_px 的值其实是 0，在 totalWidth 不占空间。
+            // 这种情况下，尽可能让 width 贴近父容器宽度
+            
+            // 若 marginLeft 为 auto，在 totalWidth 不占空间。调整至 0
             if autoMarginLeft {
                 marginLeft = .Length(0.0, .Px)
             }
             
-            // marginRight 为 auto，调整至 0
+            // marginRight 为 auto，在 totalWidth 不占空间。调整至 0
             if autoMarginRight {
                 marginRight = .Length(0.0, .Px)
             }
             
             // 小于父容器宽度
             if underflow >= 0.0 {
+                // 设置为相差值
                 width = .Length(underflow, .Px)
             } else {
-                // 超出宽度，减小 margin-right
+                // 超出宽度，减小 margin-right。由于此时 width 不能为负值，设置为 0
                 width = .Length(0.0, .Px)
                 marginRight = .Length(marginRight.toPx() + underflow, .Px)
             }
