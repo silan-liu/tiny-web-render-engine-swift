@@ -336,6 +336,7 @@ extension LayoutBox {
     }
 
     // 获取 inline 节点的容器。如果 block 包含一个 inline 节点，它会创建一个匿名 block 来包裹该 inline
+    // 所有在 block 中的 inline 节点，简单处理，都会放在一个匿名 block 中。
     mutating func getInlineContainer() -> LayoutBox {
         
         switch self.boxType {
