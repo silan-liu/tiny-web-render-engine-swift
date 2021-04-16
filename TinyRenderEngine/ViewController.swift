@@ -21,28 +21,14 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor.white
         
-        let html = """
-                    <div id="main" class="test">
-                    </div>
-                """
+        let html = readFile(fileName: "test.html")
         
         // html 解析
         var htmlParser = HTMLParser()
         let root = htmlParser.parse(input: html)
         print(root)
         
-        let css = """
-             .test {
-                padding: 0px;
-                margin: 10px;
-                position: absolute;
-             }
-
-            p {
-                font-size: 10px;
-                color: #ff908912;
-            }
-        """
+        let css = readFile(fileName: "test.css")
         
         // css 解析
         var cssParser = CSSParser()
@@ -72,6 +58,8 @@ class ViewController: UIViewController {
         // 光栅化，生成像素点
         let canvas = paintingProcessor.paint(layoutRoot: layoutTree, bounds: viewPort)
         
+        print("pixels:\(canvas.pixels)")
+        
         // 根据像素生成图片
         let image = imageFromARGB32Bitmap(pixels: canvas.pixels, width: Int(viewPort.width), height: Int(viewPort.height))
         
@@ -79,6 +67,21 @@ class ViewController: UIViewController {
         imageView.backgroundColor = UIColor.red
         imageView.frame = CGRect.init(x: 100, y: 100, width: Int(viewPort.width), height: Int(viewPort.width))
         self.view.addSubview(imageView)
+    }
+    
+    func readFile(fileName: String) -> String {
+        
+        let filePath = Bundle.main.bundlePath + "/" + fileName
+       do {
+        
+        let content = try String(contentsOfFile: filePath)
+        return content
+
+        } catch  {
+            print("readFile error")
+        }
+        
+        return ""
     }
     
     func test() {
