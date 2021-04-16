@@ -1,8 +1,45 @@
-div.test, #main {
-	background-color: blue;
+* {
+  display: block;
 }
 
-p {
-   font-size: 10px;
-   color: #ff9089;
+span {
+  display: inline;
+}
+
+html {
+  width: 600px;
+  padding: 10px;
+  border-width: 1px;
+  margin: auto;
+  background: #ffffff;
+}
+
+head {
+  display: none;
+}
+
+.outer {
+  background: #00ccff;
+  border-color: #666666;
+  border-width: 2px;
+  margin: 50px;
+  padding: 50px;
+}
+
+.inner {
+  border-color: #008000;
+  border-width: 4px;
+  height: 100px;
+  margin-bottom: 20px;
+  width: 500px;
+}
+
+.inner#bye {
+  border-color: #ff0000;
+  background: #ffff00;
+}
+
+span#name {
+  background: #0033ff;
+  color: white;
 }

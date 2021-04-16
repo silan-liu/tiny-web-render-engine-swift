@@ -61,8 +61,9 @@ class ViewController: UIViewController {
         let layoutTree = layoutProcessor.genLayoutTree(styleNode: styleNode, containingBlock: containingBlock)
         print(layoutTree)
         
-        // 绘制
+        // 绘制，定义视口大小
         var viewPort = Rect()
+        
         viewPort.width = 600
         viewPort.height = 800
         
@@ -71,15 +72,21 @@ class ViewController: UIViewController {
         // 光栅化，生成像素点
         let canvas = paintingProcessor.paint(layoutRoot: layoutTree, bounds: viewPort)
         
-        print(canvas.pixels)
+        // 根据像素生成图片
+        let image = imageFromARGB32Bitmap(pixels: canvas.pixels, width: Int(viewPort.width), height: Int(viewPort.height))
+        
+        let imageView = UIImageView(image: image)
+        imageView.backgroundColor = UIColor.red
+        imageView.frame = CGRect.init(x: 100, y: 100, width: Int(viewPort.width), height: Int(viewPort.width))
+        self.view.addSubview(imageView)
     }
     
     func test() {
-        var pixels = [PixelData]()
+        var pixels = [Color]()
 
-        let red = PixelData(a: 255, r: 255, g: 0, b: 0)
-        let green = PixelData(a: 255, r: 0, g: 255, b: 0)
-        let blue = PixelData(a: 255, r: 0, g: 0, b: 255)
+        let red: Color = (255, 0, 0, 255)
+        let green: Color = (255, 255, 0, 255)
+        let blue: Color = (255, 0, 255, 255)
 
         for _ in 1...300 {
             pixels.append(red)
@@ -100,7 +107,7 @@ class ViewController: UIViewController {
         print("test done")
     }
     
-    func imageFromARGB32Bitmap(pixels: [PixelData], width: Int, height: Int) -> UIImage? {
+    func imageFromARGB32Bitmap(pixels: [Color], width: Int, height: Int) -> UIImage? {
         guard width > 0 && height > 0 else { return nil }
         guard pixels.count == width * height else { return nil }
 
