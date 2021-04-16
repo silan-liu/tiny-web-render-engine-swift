@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9D2DF3A426250ED200AC7D62 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2DF3A326250ED200AC7D62 /* Layout.swift */; };
+		9D33242626290FBA00D84F64 /* Painting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D33242526290FBA00D84F64 /* Painting.swift */; };
 		ADC650C2260D8444001E85AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650C1260D8444001E85AC /* AppDelegate.swift */; };
 		ADC650C4260D8444001E85AC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650C3260D8444001E85AC /* SceneDelegate.swift */; };
 		ADC650C6260D8444001E85AC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC650C5260D8444001E85AC /* ViewController.swift */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		9D2DF3A326250ED200AC7D62 /* Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
+		9D33242526290FBA00D84F64 /* Painting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Painting.swift; sourceTree = "<group>"; };
 		ADC650BE260D8444001E85AC /* TinyRenderEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinyRenderEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADC650C1260D8444001E85AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ADC650C3260D8444001E85AC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				ADC650EF261003C5001E85AC /* CSSParser.swift */,
 				ADC650F32610274F001E85AC /* Style.swift */,
 				9D2DF3A326250ED200AC7D62 /* Layout.swift */,
+				9D33242526290FBA00D84F64 /* Painting.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				ADC650DD260D9536001E85AC /* HTMLParser.swift in Sources */,
 				9D2DF3A426250ED200AC7D62 /* Layout.swift in Sources */,
 				ADC650DB260D8CB3001E85AC /* SourceHelper.swift in Sources */,
+				9D33242626290FBA00D84F64 /* Painting.swift in Sources */,
 				ADC650C4260D8444001E85AC /* SceneDelegate.swift in Sources */,
 				ADC650F42610274F001E85AC /* Style.swift in Sources */,
 			);

@@ -114,10 +114,7 @@ extension LayoutBox {
     func getStyleNode() -> StyleNode? {
         switch self.boxType {
         
-        case .BlockNode(let node):
-            return node
-            
-        case .InlineNode(let node):
+        case .BlockNode(let node), .InlineNode(let node):
             return node
             
         default:
@@ -341,10 +338,7 @@ extension LayoutBox {
         
         switch self.boxType {
         
-        case .AnonymousBlock:
-            return self
-            
-        case .InlineNode(_):
+        case .AnonymousBlock, .InlineNode(_):
             return self
             
         case .BlockNode(_):

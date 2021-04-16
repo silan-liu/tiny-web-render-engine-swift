@@ -53,6 +53,25 @@ class ViewController: UIViewController {
         let styleProcessor = StyleProcessor()
         let styleNode = styleProcessor.genStyleTree(root: root, styleSheet: styleSheet)
         print(styleNode)
+        
+        // 布局处理
+        var layoutProcessor = LayoutProcessor()
+        let containingBlock = Dimensions()
+
+        let layoutTree = layoutProcessor.genLayoutTree(styleNode: styleNode, containingBlock: containingBlock)
+        print(layoutTree)
+        
+        // 绘制
+        var viewPort = Rect()
+        viewPort.width = 600
+        viewPort.height = 800
+        
+        let paintingProcessor = PaintingProcessor()
+        
+        // 光栅化，生成像素点
+        let canvas = paintingProcessor.paint(layoutRoot: layoutTree, bounds: viewPort)
+        
+        print(canvas.pixels)
     }
     
     func test() {
