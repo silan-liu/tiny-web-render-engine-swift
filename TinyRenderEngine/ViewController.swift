@@ -42,30 +42,30 @@ class ViewController: UIViewController {
         
         // 布局处理
         var layoutProcessor = LayoutProcessor()
-        let containingBlock = Dimensions()
 
-        let layoutTree = layoutProcessor.genLayoutTree(styleNode: styleNode, containingBlock: containingBlock)
+        let layoutTree = layoutProcessor.genLayoutTree(styleNode: styleNode, containingBlock: Dimensions())
         print(layoutTree)
-        
-        // 绘制，定义视口大小
-        var viewPort = Rect()
-        
-        viewPort.width = 600
-        viewPort.height = 800
         
         let paintingProcessor = PaintingProcessor()
         
-        // 光栅化，生成像素点
-        let canvas = paintingProcessor.paint(layoutRoot: layoutTree, bounds: viewPort)
+        // 定义视口大小
+        let width: Float = Float(self.view.bounds.size.width)
+        let height: Float = Float(self.view.bounds.size.height)
         
-        print("pixels:\(canvas.pixels)")
+        var viewPort = Dimensions()
+        
+        viewPort.content.width = width
+        viewPort.content.height = height
+        
+        // 光栅化，生成像素点
+        let canvas = paintingProcessor.paint(layoutRoot: layoutTree, bounds: viewPort.content)
         
         // 根据像素生成图片
-        let image = imageFromARGB32Bitmap(pixels: canvas.pixels, width: Int(viewPort.width), height: Int(viewPort.height))
+        let image = imageFromARGB32Bitmap(pixels: canvas.pixels, width: Int(width), height: Int(height))
         
         let imageView = UIImageView(image: image)
         imageView.backgroundColor = UIColor.red
-        imageView.frame = CGRect.init(x: 100, y: 100, width: Int(viewPort.width), height: Int(viewPort.width))
+        imageView.frame = CGRect.init(x: 0, y: 0, width: Int(width), height: Int(height))
         self.view.addSubview(imageView)
     }
     
@@ -87,9 +87,10 @@ class ViewController: UIViewController {
     func test() {
         var pixels = [Color]()
 
-        let red: Color = (255, 0, 0, 255)
-        let green: Color = (255, 255, 0, 255)
-        let blue: Color = (255, 0, 255, 255)
+        // a,r,g,b
+        let red: Color = (255, 255, 0, 0)
+        let green: Color = (255, 0, 255, 0)
+        let blue: Color = (255, 0, 0, 255)
 
         for _ in 1...300 {
             pixels.append(red)

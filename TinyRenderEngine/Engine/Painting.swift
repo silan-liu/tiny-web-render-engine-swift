@@ -7,7 +7,7 @@
 
 import Foundation
 
-// rgba
+// argb
 typealias Color = (UInt8, UInt8, UInt8, UInt8)
 
 // 画布
@@ -54,10 +54,10 @@ extension Canvas {
         let x1 = Int((rect.x + rect.width).clamp(min: 0, max: Float(self.width)))
         let y1 = Int((rect.y + rect.height).clamp(min: 0, max: Float(self.height)))
         
-        // 遍历所有点
-        for x in x0...x1 {
-            for y in y0...y1 {
-                let index = x * width + y
+        // 遍历所有点，横向一行行填充
+        for y in y0...y1  {
+            for x in x0...x1 {
+                let index = y * width + x
                 pixels[index] = color
             }
         }
@@ -67,7 +67,16 @@ extension Canvas {
 extension Float {
     // 获取范围内的值
     func clamp(min: Float, max: Float) -> Float {
-        return 0.0
+        var result = self
+        if (result < min) {
+            result = min
+        }
+        
+        if (result > max) {
+            result = max
+        }
+        
+        return result
     }
 }
 
@@ -101,9 +110,11 @@ struct PaintingProcessor {
     
     func renderLayoutBox(list: inout [DisplayCommand], layoutBox: LayoutBox) {
         // 绘制背景
+        renderBackground(list: &list, layoutBox: layoutBox)
         
         // 绘制边框
-        
+        renderBorder(list: &list, layoutBox: layoutBox)
+
         // 遍历子节点，递归生成命令
         for child in layoutBox.children {
             renderLayoutBox(list: &list, layoutBox: child)
@@ -167,7 +178,7 @@ struct PaintingProcessor {
             // 值为颜色
             switch value {
             case .Color(let r, let g, let b, let a):
-                return Color(r, g, b, a)
+                return Color(a, r, g, b)
             default:
                 return nil
             }

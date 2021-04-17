@@ -67,7 +67,7 @@ extension Value: Equatable {
             return l == r
         }
         
-        return true
+        return false
     }
 
 }
@@ -338,9 +338,7 @@ struct CSSParser {
     mutating func parseHexPair() -> UInt8 {
         // 取出 2 位字符
         let s = self.sourceHelper.consumeNCharacter(count: 2)
-        
-        print("parseHexPair:\(s)")
-        
+            
         // 转化为整数
         let value = UInt8(s, radix: 16) ?? 0
         
