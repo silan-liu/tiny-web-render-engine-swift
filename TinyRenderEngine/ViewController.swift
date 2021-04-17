@@ -41,22 +41,25 @@ class ViewController: UIViewController {
         print(styleNode)
         
         // 布局处理
+        // 定义视口大小
+        let width: Float = Float(self.view.bounds.size.width)
+        let height: Float = Float(self.view.bounds.size.height)
+    
+        var viewPort = Dimensions()
+        
+        // 只设置宽度，高度自动计算
+        viewPort.content.width = width
+        
         var layoutProcessor = LayoutProcessor()
 
-        let layoutTree = layoutProcessor.genLayoutTree(styleNode: styleNode, containingBlock: Dimensions())
+        let layoutTree = layoutProcessor.genLayoutTree(styleNode: styleNode, containingBlock: viewPort)
         print(layoutTree)
         
         let paintingProcessor = PaintingProcessor()
         
-        // 定义视口大小
-        let width: Float = Float(self.view.bounds.size.width)
-        let height: Float = Float(self.view.bounds.size.height)
-        
-        var viewPort = Dimensions()
-        
-        viewPort.content.width = width
+        // 设置高度
         viewPort.content.height = height
-        
+
         // 光栅化，生成像素点
         let canvas = paintingProcessor.paint(layoutRoot: layoutTree, bounds: viewPort.content)
         

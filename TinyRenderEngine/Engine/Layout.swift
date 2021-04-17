@@ -126,7 +126,7 @@ extension LayoutBox {
     }
     
     // 布局，只有 block 类型才进行布局
-     func layout(containingBlock: Dimensions) {
+    func layout(containingBlock: Dimensions) {
         
         switch self.boxType {
         
@@ -370,6 +370,7 @@ extension LayoutBox {
 struct LayoutProcessor {
     // 生成布局树
     mutating func genLayoutTree(styleNode: StyleNode, containingBlock: Dimensions) -> LayoutBox {
+        
         let rootBox = buildLayoutBox(styleNode: styleNode)
        
         // 布局
