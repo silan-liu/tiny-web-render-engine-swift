@@ -161,7 +161,7 @@ extension LayoutBox {
     // 规则如下：
     // 1. 当 width 不为 auto，且总宽度 > 父容器宽度，margin-left/margin-right 中为 auto 的值设置为 0
     // 2. 当 width/margin-left/margin-right 都有设置值时，根据 block 的direction 调整。如果是 ltr，则调整 margin-right；如果是 rtl，则调整 margin-left。这里我们默认都是 ltr，调整 margin-right。
-    // 3. 当 width/margin-left/margin-right 仅有一个为 auto 时，设置为剩余空间
+    // 3. 当 width 不为 auto，margin-left/margin-right 仅有一个为 auto 时，设置为剩余空间
     // 4. 当 width 为 auto，margin-left/margin-right 中为 auto 的属性设置为 0，width 设置为剩余空间
     // 5. 当 width 不为 auto，margin-left 和 margin-right 都为 auto，平分空间
      func calculateBlockWidth(containingBlock: Dimensions) {
